@@ -121,21 +121,27 @@ def solicit_order(cookies):
     :returns: A list of the ids and quantities of each cookies the user wants to order.
     """
     # write your code for this function below this line
-    stop = False
+    stop = True
     print(stop)
     orders = []
     while stop == True:
         cookies_wanted = input('Please enter the number of any cookie you would like to purchase:')
-        if cookies_wanted == 'finished' or cookies_wanted == 'done' or cookies_wanted == 'quit' or cookies_wanted == 'exit':
-            print(orders)
-            return orders
-        if cookies_wanted.isnumeric == True:
-            quantity = solicit_quantity(cookies_wanted,cookies)
-            order = {'id': cookies_wanted, 'quantity': quantity}
-            orders.append(order)
-            print(orders)
+        print(cookies_wanted)
+        quantity = solicit_quantity(cookies_wanted,cookies)
+        order = {'id': cookies_wanted, 'quantity': quantity}
+        orders.append(order)
+        print(orders)
+        #if cookies_wanted == 'finished' or cookies_wanted == 'done' or cookies_wanted == 'quit' or cookies_wanted == 'exit':
+            #print(orders)
+           # return orders
+        #if cookies_wanted.isnumeric == True:
+           # quantity = solicit_quantity(cookies_wanted,cookies)
+           # order = {'id': cookies_wanted, 'quantity': quantity}
+           # orders.append(order)
+           # print(orders)
             
-
+cookies = bake_cookies("data/cookies.csv")
+solicit_order(cookies)
 
 def display_order_total(order, cookies):
     """
