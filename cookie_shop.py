@@ -95,12 +95,13 @@ def solicit_quantity(id, cookies):
     cookie_dic = get_cookie_from_dict(id,cookies)
     title = cookie_dic['title']
     price = cookie_dic['price']
-    quantity = input(f"My favorite! How many {title} would you like?")
-    if quantity.isnumeric() == True:
-        subtotal = float(price[1:])*int(quantity)
-        subtotal = (format(subtotal,'.2f'))
-        print(f"Your subtotal for {quantity} {title} is ${subtotal}.")
-        return int(quantity)
+    while True:
+        quantity = input(f"My favorite! How many {title} would you like?")
+        if quantity.isnumeric() == True:
+            subtotal = float(price[1:])*int(quantity)
+            subtotal = (format(subtotal,'.2f'))
+            print(f"Your subtotal for {quantity} {title} is ${subtotal}.")
+            return int(quantity)
 
 
 def solicit_order(cookies):
@@ -121,23 +122,16 @@ def solicit_order(cookies):
     """
     # write your code for this function below this line
     stop = True
-    #print(stop)
     orders = []
     while stop == True:
         cookies_wanted = input('Please enter the number of any cookie you would like to purchase:')
-        print(cookies_wanted)
         if cookies_wanted.isnumeric() == True:
             quantity = solicit_quantity(cookies_wanted,cookies)
             order = {'id': cookies_wanted, 'quantity': quantity}
             orders.append(order)
-            print(orders)
         if cookies_wanted == 'finished' or cookies_wanted == 'done' or cookies_wanted == 'quit' or cookies_wanted == 'exit':
-            print(orders)
             return orders
     
-            
-cookies = bake_cookies("data/cookies.csv")
-solicit_order(cookies)
 
 def display_order_total(order, cookies):
     """
@@ -159,6 +153,21 @@ def display_order_total(order, cookies):
 
     """
     # write your code for this function below this line
+    total_cost = 0
+    print()
+    print("Thank you for your order. You have ordered:\n")
+    for orders in order:
+        quantity = orders['quantity']
+        for cookie in cookies:
+            if cookie['id'] == orders['id']:
+                price = cookie['price']
+                name = cookie['title']
+        cost = quantity * float(price[1:])
+        total_cost += cost
+        print(f"-{quantity} {name}")
+    print(f"\nYour total is ${total_cost:.2f}.")
+    print("Please pay with Bitcoin before picking-up.")
+    print("\nThank you!\n-The Python Cookie Shop Robot.")
 
 
 def run_shop(cookies):
