@@ -95,7 +95,6 @@ def solicit_quantity(id, cookies):
     cookie_dic = get_cookie_from_dict(id,cookies)
     title = cookie_dic['title']
     price = cookie_dic['price']
-    print(price[1:])
     quantity = input(f"My favorite! How many {title} would you like?")
     if quantity.isnumeric() == True:
         subtotal = float(price[1:])*int(quantity)
@@ -122,23 +121,20 @@ def solicit_order(cookies):
     """
     # write your code for this function below this line
     stop = True
-    print(stop)
+    #print(stop)
     orders = []
     while stop == True:
         cookies_wanted = input('Please enter the number of any cookie you would like to purchase:')
         print(cookies_wanted)
-        quantity = solicit_quantity(cookies_wanted,cookies)
-        order = {'id': cookies_wanted, 'quantity': quantity}
-        orders.append(order)
-        print(orders)
-        #if cookies_wanted == 'finished' or cookies_wanted == 'done' or cookies_wanted == 'quit' or cookies_wanted == 'exit':
-            #print(orders)
-           # return orders
-        #if cookies_wanted.isnumeric == True:
-           # quantity = solicit_quantity(cookies_wanted,cookies)
-           # order = {'id': cookies_wanted, 'quantity': quantity}
-           # orders.append(order)
-           # print(orders)
+        if cookies_wanted.isnumeric() == True:
+            quantity = solicit_quantity(cookies_wanted,cookies)
+            order = {'id': cookies_wanted, 'quantity': quantity}
+            orders.append(order)
+            print(orders)
+        if cookies_wanted == 'finished' or cookies_wanted == 'done' or cookies_wanted == 'quit' or cookies_wanted == 'exit':
+            print(orders)
+            return orders
+    
             
 cookies = bake_cookies("data/cookies.csv")
 solicit_order(cookies)
