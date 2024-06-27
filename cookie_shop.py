@@ -16,7 +16,13 @@ def bake_cookies(filepath):
     :returns: A list of all cookie data, where each cookie is represented as a dictionary.
     """
     # write your code for this function below here.
-
+    import csv
+    cookies = []
+    with open(filepath, mode='r') as file:
+        csv_reader = csv.DictReader(file)
+        for row in csv_reader:
+            cookies.append(dict(row))
+    return cookies
 
 def welcome():
     """
@@ -27,7 +33,8 @@ def welcome():
 
     """
     # write your code for this function below this line
-
+    print("Welcome to the Python Cookie Shop!")
+    print("We feed each according to their need.")
 
 def display_cookies(cookies):
     """
@@ -48,6 +55,11 @@ def display_cookies(cookies):
     :param cookies: a list of all cookies in the shop, where each cookie is represented as a dictionary.
     """
     # write your code for this function below this line
+    print("Here are the cookies we have in the shop for you:\n")
+    for index, cookie in enumerate(cookies,start=1):
+        print(f"  #{index} - {cookie['title']}")
+        print(f"  {cookie['description']}")
+        print(f"  Price: {cookie['price']}\n")
 
 
 def get_cookie_from_dict(id, cookies):
@@ -59,6 +71,9 @@ def get_cookie_from_dict(id, cookies):
     :returns: the matching cookie, as a dictionary
     """
     # write your code for this function below this line
+    for cookie in cookies:
+        if cookie['id'] == str(id):
+            return cookie
 
 
 def solicit_quantity(id, cookies):
@@ -77,6 +92,16 @@ def solicit_quantity(id, cookies):
     :returns: The quantity the user entered, as an integer.
     """
     # write your code for this function below this line
+    cookie_dic = get_cookie_from_dict(id,cookies)
+    title = cookie_dic['title']
+    price = cookie_dic['price']
+    print(price[1:])
+    quantity = input(f"My favorite! How many {title} would you like?")
+    if quantity.isnumeric() == True:
+        subtotal = float(price[1:])*int(quantity)
+        subtotal = (format(subtotal,'.2f'))
+        print(f"Your subtotal for {quantity} {title} is ${subtotal}.")
+        return int(quantity)
 
 
 def solicit_order(cookies):
@@ -96,6 +121,20 @@ def solicit_order(cookies):
     :returns: A list of the ids and quantities of each cookies the user wants to order.
     """
     # write your code for this function below this line
+    stop = False
+    print(stop)
+    orders = []
+    while stop == True:
+        cookies_wanted = input('Please enter the number of any cookie you would like to purchase:')
+        if cookies_wanted == 'finished' or cookies_wanted == 'done' or cookies_wanted == 'quit' or cookies_wanted == 'exit':
+            print(orders)
+            return orders
+        if cookies_wanted.isnumeric == True:
+            quantity = solicit_quantity(cookies_wanted,cookies)
+            order = {'id': cookies_wanted, 'quantity': quantity}
+            orders.append(order)
+            print(orders)
+            
 
 
 def display_order_total(order, cookies):
